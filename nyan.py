@@ -1,6 +1,5 @@
 from flask import Flask, render_template
 import os
-from pml import app
 port = int(os.environ.get('PORT', 5000))
 app = Flask(__name__)
 
