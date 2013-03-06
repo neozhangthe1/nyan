@@ -1,0 +1,245 @@
+<html>
+<head>
+  <title>NYAN NYAN NYAN NYAN NYAN NYAN NYAN NYAN NYAN NYAN NYAN NYAN NYAN NYAN NYAN NYAN NYAN NYAN NYAN NYAN</title> 
+
+  <meta name="title" content="Nyan Nyan Nyan Sheep" />
+  <meta name="description" content="Ras Adds NyanSheep to Any Webpage" />
+
+  <style type="text/css" media="screen"> 
+      body { margin: 0; padding: 0; overflow: hidden;}
+      #nyanbox div { position: absolute; }
+      .nyancat { position: absolute; }
+    </style>
+
+  <link rel="shortcut icon" href="favicon.gif">
+  <link rel="icon" type="image/gif" href="favicon.gif" />
+
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+  <script type="text/javascript" src="/static/js/soundmanager2-nodebug-jsmin.js"></script>
+
+  <script type="text/javascript">
+
+    // var _gaq = _gaq || [];
+    // _gaq.push(['_setAccount', 'UA-20648379-4']);
+    // _gaq.push(['_setDomainName', 'raswin.com']);
+    // _gaq.push(['_setAllowHash', 'false']);
+    // _gaq.push(['_trackPageview']);
+
+    // (function() {
+    // var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    // ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    // var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    // })();
+
+  </script>
+
+</head>
+<body>
+
+  <iframe id="nyantop" width="100%" height="100%" src="" border="0" noborder="noborder" frameborder="0" padding="0" spacing="0"></iframe>
+  <div id="nyanbox"></div>
+
+  <script type="text/javascript">
+
+  function getArgs() {
+    var args = new Object();
+    args['music'] = 'http://cdn.nyanit.com/audio/nyanlooped.mp3';
+    args['url'] = "";
+    args['img'] = "";
+    var query = location.search.substring(1); // Get query string
+    var pairs = query.split("&"); // Break at ampersand
+    for (var i = 0; i < pairs.length; i++) {
+      var pos = pairs[i].indexOf('='); // Look for "name=value"
+      if (pos == -1) continue; // If not found, skip
+      var argname = pairs[i].substring(0, pos); // Extract the name
+      var value = pairs[i].substring(pos + 1); // Extract the value
+      value = decodeURIComponent(value); // Decode it, if needed
+      args[argname] = value; // Store as a property
+    }
+    return args; // Return the object
+  }
+
+  var args = getArgs();
+  // animations , SEND YOURS !!
+  // spin/rotate, diagonal, opacity, grow/shrink
+  // in ur room!!
+
+  // NYYAAAAANNN!
+
+  zoom = 7000;
+
+  var flyright = function(next) {
+    lpos = -$(this).width() * 1.3;
+    lend = $(window).width();
+    tpos = Math.random() * ($(window).height() - $(this).height());
+    $(this).offset({
+      "left": lpos,
+      "top": tpos
+    });
+    $(this).delay(Math.random() * 3000).animate({
+      left: lend
+    }, {
+      queue: false,
+      duration: zoom,
+      easing: "linear",
+      complete: function() {
+        moar($(this));
+        next();
+      }
+    }).queue(flynext());
+  };
+
+  var flyleft = function(next) {
+    lpos = $(window).width();
+    lend = -$(this).width() * 1.3;
+    tpos = Math.random() * ($(window).height() - $(this).height());
+    $(this).offset({
+      "left": lpos,
+      "top": tpos
+    });
+    $(this).delay(Math.random() * 3000).animate({
+      left: lend
+    }, {
+      queue: false,
+      duration: zoom,
+      easing: "linear",
+      complete: function() {
+        moar($(this));
+        next();
+      }
+    }).queue(flynext());
+  };
+
+  // array of animation functions
+  var fly = [flyright, flyleft];
+  </script>
+  <script type='text/javascript'>
+      //<![CDATA[
+      soundManager.url = '/static/swf/soundmanager2_flash9.swf';
+      soundManager.flashVersion = 9;
+      soundManager.debugMode = false;
+      soundManager.useFlashBlock = false;
+      soundManager.onready(function() {
+          nyannyan = soundManager.createSound({
+          id: 'loop',
+          // url: '/mp3s/nyan-looped.mp3',
+          url: args['music'],
+          // url: 'http://s3.amazonaws.com/nyan.cat/nyan-looped.mp3',
+          autoLoad: true,
+          autoPlay: true,
+          loops: 9999999,
+          onload: function() {
+          },
+          onfinish: function() {
+            // if($.browser.SafariMobile){
+            //   this.play();
+            // }
+          },
+          volume: 40
+        });
+        //nyannyan.play();
+    if (nyanuri == "nyan.cat") { nyannyan.stop(); }
+      });
+
+  </script>
+
+  <script type="text/javascript">
+
+    // MOAR!!!
+
+      function moar(thiscat) {
+        //use .data() to track laps for each cat.
+        
+        if (thiscat.width() < 250) {
+          thiscat.width(thiscat.width()*1.3);
+          thiscat.height(thiscat.height()*1.3);
+          //animate this with queue:false
+          //add opacity
+        }
+        else if (thiscat.width() < 500) {
+          thiscat.width(thiscat.width()*1.2);
+          thiscat.height(thiscat.height()*1.2);
+          //animate this with queue:false
+          //add opacity
+        }
+        else { // slow down, barely
+          thiscat.width(thiscat.width()*1.1);
+          thiscat.height(thiscat.height()*1.1);        
+        }
+      }
+      
+      cats = 0;
+      quant = 0;
+    imgurl = "";
+      function flyflyfly() {
+        cats++;
+        newcatbox = $('<div></div>');
+    
+    if (args['img'] == "")
+      imgurl = "/static/img/nyan.gif";// + (Math.floor(Math.random()*5)+1) + ".gif"//0-4;
+    else
+      imgurl = args['img'];
+        newcat = $('<img/>', {
+      src: imgurl,  
+          //IE 8 chokes on the class here, NYAN
+          //class: "nyancat",
+          click: function() {
+            $(this).parent().remove();
+            cats--;
+            flyflyfly();
+            if ((Math.floor(Math.random() * 3)) < 1) {flyflyfly();}
+            /*
+            quant--;
+            if ($('#nyanbox').children().size() > 0) {
+              flyflyfly();
+            }
+            //nyannyan.setVolume('loop',75);
+            */            
+          }
+        });
+        
+        newcat.addClass("nyancat");
+        newcatbox.append(newcat);
+        $('#nyanbox').append(newcatbox);
+        
+    if (args['img'] == ""){
+        newcat.width(newcat.width(301*(1/5)));
+        newcat.height(newcat.height(119*(1/5)));
+    } else {
+      var img=new Image();
+      img.src=imgurl;
+      newcat.width(newcat.width(img.width));
+      newcat.height(newcat.height(img.height));
+    }
+    
+        newcat.delay(Math.random() * 2000).queue(flynext());
+      }
+      
+      function flynext() {
+        x = Math.floor(Math.random() * fly.length);
+        if ((Math.floor(Math.random() * 8 * cats)) < 1) {flyflyfly();} 
+        return fly[x];
+      } 
+
+      // grab uri and set iframe src
+
+    /*
+    NYAAAN NYYAAAAAN NYAN NYAN NYAAAN NYAAAN NYYAAAAAN NYAN NYAN NYAAAN
+    NYAN NYAN NYAN NYAN NYAN NYAN NYAN NYAN NYAN NYAN NYAN NYAN NYAN NYAN
+    NYAAN NYAN NYAAAN NYAN NYAN NYAN NYAAN NYAN NYAN NYANNYANNYANNYAN!!!1!11
+    OMG
+    */
+
+      $(function() {
+    $("#nyantop").attr("src","{{url}}");
+        $('#nyantop').height($(window).height()).width($(window).width());
+        $(window).resize(function () {$('#nyantop').height($(window).height()).width($(window).width());});
+        //.css('overflow', 'hidden');
+
+        flyflyfly();
+      });        
+
+    </script>
+  </body>
+  <!-- nyan -->
+</html>
