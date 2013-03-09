@@ -110,6 +110,30 @@
     }).queue(flynext());
   };
 
+  var flytocenter = function(next) {
+    lpos = -$(this).width() * 1.3;
+    lend = $(window).width()/2;
+    tpos = 0.5 * ($(window).height() - $(this).height());
+    $(this).offset({
+      "left": 0,
+      "top": tpos
+    });
+    that = this;
+    $(this).delay(Math.random() * 3000).animate({
+      left: lend
+    }, {
+      queue: false,
+      duration: zoom,
+      easing: "linear",
+      complete: function() {
+        that.src = "/static/img/mashroom.png";
+        alert("我也是一只蘑菇");
+        // moar($(this));
+        // next();
+      }
+    });//.queue(flynext());
+  }
+
   // array of animation functions
   var fly = [flyright, flyleft];
   </script>
@@ -149,81 +173,120 @@
 
       function moar(thiscat) {
         //use .data() to track laps for each cat.
-        
+
         if (thiscat.width() < 250) {
-          thiscat.width(thiscat.width()*1.3);
-          thiscat.height(thiscat.height()*1.3);
+          thiscat.width(thiscat.width() * 1.3);
+          thiscat.height(thiscat.height() * 1.3);
           //animate this with queue:false
           //add opacity
-        }
-        else if (thiscat.width() < 500) {
-          thiscat.width(thiscat.width()*1.2);
-          thiscat.height(thiscat.height()*1.2);
+        } else if (thiscat.width() < 500) {
+          thiscat.width(thiscat.width() * 1.2);
+          thiscat.height(thiscat.height() * 1.2);
           //animate this with queue:false
           //add opacity
-        }
-        else { // slow down, barely
-          thiscat.width(thiscat.width()*1.1);
-          thiscat.height(thiscat.height()*1.1);        
+        } else { // slow down, barely
+          thiscat.width(thiscat.width() * 1.1);
+          thiscat.height(thiscat.height() * 1.1);
         }
       }
-      
+
       cats = 0;
       quant = 0;
-    imgurl = "";
-      function flyflyfly() {
-        cats++;
-        newcatbox = $('<div></div>');
-    
-    if (args['img'] == "")
-      imgurl = "/static/img/nyan.gif";// + (Math.floor(Math.random()*5)+1) + ".gif"//0-4;
-    else
-      imgurl = args['img'];
-        newcat = $('<img/>', {
-      src: imgurl,  
+      imgurl = "";
+      function mashroomfly() {
+        imgurl = "/static/img/mashroom.gif";
+        mashroom = $('<img/>', {
+          src: imgurl,
           //IE 8 chokes on the class here, NYAN
           //class: "nyancat",
           click: function() {
-            $(this).parent().remove();
-            cats--;
-            flyflyfly();
-            if ((Math.floor(Math.random() * 3)) < 1) {flyflyfly();}
+            // $(this).parent().remove();
+            // cats--;
+            // flyflyfly();
+            // if ((Math.floor(Math.random() * 3)) < 1) {
+            //   flyflyfly();
+            // }
             /*
             quant--;
             if ($('#nyanbox').children().size() > 0) {
               flyflyfly();
             }
             //nyannyan.setVolume('loop',75);
-            */            
+            */
           }
         });
-        
+
+        mashroom.addClass("mashroom");
+        newcatbox.append(mashroom);
+        $('#nyanbox').append(newcatbox);
+
+        var img = new Image();
+        img.src = imgurl;
+        mashroom.width(200);
+        mashroom.height(250);
+
+        mashroom.delay(Math.random() * 2000).queue(flytocenter);
+      }
+
+      function mashroomnext() {
+        return flytocenter;
+      }
+
+      function flyflyfly() {
+        cats++;
+        newcatbox = $('<div></div>');
+
+        if (args['img'] == "") imgurl = "/static/img/nyan.gif"; // + (Math.floor(Math.random()*5)+1) + ".gif"//0-4;
+        else imgurl = args['img'];
+        newcat = $('<img/>', {
+          src: imgurl,
+          //IE 8 chokes on the class here, NYAN
+          //class: "nyancat",
+          click: function() {
+            $(this).parent().remove();
+            cats--;
+            flyflyfly();
+            if ((Math.floor(Math.random() * 3)) < 1) {
+              flyflyfly();
+            }
+            /*
+            quant--;
+            if ($('#nyanbox').children().size() > 0) {
+              flyflyfly();
+            }
+            //nyannyan.setVolume('loop',75);
+            */
+          }
+        });
+
         newcat.addClass("nyancat");
         newcatbox.append(newcat);
         $('#nyanbox').append(newcatbox);
-        
-    if (args['img'] == ""){
-        newcat.width(newcat.width(301*(1/5)));
-        newcat.height(newcat.height(119*(1/5)));
-    } else {
-      var img=new Image();
-      img.src=imgurl;
-      newcat.width(newcat.width(img.width));
-      newcat.height(newcat.height(img.height));
-    }
-    
+
+        if (args['img'] == "") {
+          newcat.width(newcat.width(301 * (1 / 5)));
+          newcat.height(newcat.height(119 * (1 / 5)));
+        } else {
+          var img = new Image();
+          img.src = imgurl;
+          newcat.width(newcat.width(img.width));
+          newcat.height(newcat.height(img.height));
+        }
+
         newcat.delay(Math.random() * 2000).queue(flynext());
       }
-      
+
       function flynext() {
         x = Math.floor(Math.random() * fly.length);
-        if ((Math.floor(Math.random() * 8 * cats)) < 1) {flyflyfly();} 
+        if ((Math.floor(Math.random() * 8 * cats)) < 1) {
+          flyflyfly();
+        }
         return fly[x];
-      } 
+      }
 
       // grab uri and set iframe src
 
-    /*
+      /*
     NYAAAN NYYAAAAAN NYAN NYAN NYAAAN NYAAAN NYYAAAAAN NYAN NYAN NYAAAN
     NYAN NYAN NYAN NYAN NYAN NYAN NYAN NYAN NYAN NYAN NYAN NYAN NYAN NYAN
     NYAAN NYAN NYAAAN NYAN NYAN NYAN NYAAN NYAN NYAN NYANNYANNYANNYAN!!!1!11
@@ -231,14 +294,16 @@
     */
 
       $(function() {
-    $("#nyantop").attr("src","{{url}}");
+        $("#nyantop").attr("src", "{{url}}");
         $('#nyantop').height($(window).height()).width($(window).width());
-        $(window).resize(function () {$('#nyantop').height($(window).height()).width($(window).width());});
+        $(window).resize(function() {
+          $('#nyantop').height($(window).height()).width($(window).width());
+        });
         //.css('overflow', 'hidden');
 
         flyflyfly();
-      });        
-
+        mashroomfly();
+      });
     </script>
   </body>
   <!-- nyan -->
