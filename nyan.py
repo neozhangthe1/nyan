@@ -16,10 +16,10 @@ app.config.update(
 	)
 mail.init_app(app)
 
-# @app.route('/nyan/')
-# @app.route('/nyan/<path:url>')
-# def nyan(url=""):
-# 	return render_template("nyan.html",url=url)
+@app.route('/')
+@app.route('/<path:url>')
+def nyan(url=""):
+	return render_template("nyan.html",url=url)
 
 @app.route('/caigu')
 def caigu():
