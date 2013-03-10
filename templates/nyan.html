@@ -9,14 +9,104 @@
       body { margin: 0; padding: 0; overflow: hidden;}
       #nyanbox div { position: absolute; }
       .nyancat { position: absolute; }
+      p.bubble {
+          position: relative; /*see the support section below for more info*/
+          width: 300px; /*width of the speech bubble*/
+          margin-bottom: 30px; /*must be at least the size the triangle we're going to create below*/
+          /**add a curve to the corners**/
+          -webkit-border-radius: 20px;
+          -moz-border-radius: 20px;
+          border-radius: 20px;
+          /**Give the background a gradient**/
+          background: #c49bc4; /*required for browsers that don't support gradients*/
+          background: -webkit-linear-gradient(#7e527f, #c49bc4);
+          background: -moz-linear-gradient(#7e527f, #c49bc4);
+          background: -o-linear-gradient(#7e527f, #c49bc4);
+          background: linear-gradient(#7e527f, #c49bc4);
+          -pie-background: linear-gradient (#7e527f, #c49bc4); /*use CSS3Pie to make the gradient work in IE9 and lower*/
+          behavior: url(folder/PIE.htc); /*location of PIE.htc on your server*/
+      }
+      /*****CREATE THE TRIANGLE*****/
+      p.bubble:after {
+        content: "";
+        position: absolute; /*see the support section below for more info*/
+        left: 50px; /*position of the triangle from the left edge of the bubble*/
+        border-width: 25px 25px 0 25px; /*size of the triangle*/
+        bottom: -25px; /*negative value of the top border width */
+        border-style: solid;
+        border-color: #c49bc4 transparent; /*same colour as the lower of the bubble's gradient*/
+      }
+      p.speech{
+        position: relative;
+        width: 200px;
+        height: 100px;
+        text-align: center;
+        line-height: 100px;
+        background-color: #fff;
+        border: 8px solid #666;
+        -webkit-border-radius: 30px;
+        -moz-border-radius: 30px;
+        border-radius: 30px;
+        -webkit-box-shadow: 2px 2px 4px #888;
+        -moz-box-shadow: 2px 2px 4px #888;
+        box-shadow: 2px 2px 4px #888;
+      }
+      /*******FIRST CREATE THE BUBBLE - this is done in the same way as the examples above******/
+      blockquote.quote {
+      position:relative; /*see the support section below for more info*/
+      width:400px; /*size of the bubble*/
+      padding:20px;
+      margin:20px 0 30px 40px;
+      color:#f6edf6
+      /**Give the corners a curve **/
+      -webkit-border-radius:30px /60px;
+      -moz-border-radius:30px /60px;
+      border-radius:30px /60px; /* the second value, preceded by a / defines the vertical radius*/
+      /**Add a gradient to the background of the bubble**/
+      background:#c49bc4; /*required for browsers that don't support gradients*/
+      background:-webkit-gradient(#7e527f, #c49bc4);
+      background:-moz-linear-gradient(#7e527f, #c49bc4);
+      background:-o-linear-gradient(#7e527f, #c49bc4);
+      background:linear-gradient(#7e527f, #c49bc4);
+      }
+      /*****NOW CREATE THE TRIANGLE*****/
+      /**because this is an obtuse triangle we'll create it in two sections**/
+      /**First the coloured section that you see as the triangle**/
+      blockquote.quote:before {
+      content:"";
+      position:absolute; /*see the support section below for more info*/
+      bottom:-30px; /*height of the triangle*/
+      right:80px; /*distance from the right edge of the bubble*/
+      border-width:0 0 30px 60px; /*3rd value is height of the triangle and must be same as bottom*/
+      border-style:solid;
+      border-color:transparent #c49bc4; /*colour of the triangle*/
+      }
+      /**Now the transparent section that's the same colour as the container background**/
+      blockquote.quote:after {
+      content:"";
+      position:absolute; /*see the support section below for more info*/
+      bottom:-30px; /*height of the triangle, same as the bottom value in :before*/
+      right:115px; /* = (right set above in :before) + (forth value of border-width) so here 80px + 35px */
+      border-width:0 0 30px 35px; /*3rd value is height of the triangle and must be same as bottom*/
+      border-style:solid;
+      border-color:transparent #fffdf7; /*background colour of the container*/
+      }
+      /******FINALLY POSITION & SYTLE THE AUTHOR'S NAME TEXT*****/
+      blockquote.quote + p {
+      margin-top:-30px;
+      padding-left:260px;
+      font-style:italic;
+      letter-spacing:-1px;
+      color: white;
+      }
     </style>
 
   <link rel="shortcut icon" href="favicon.gif">
   <link rel="icon" type="image/gif" href="favicon.gif" />
-
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+  <link href="/static/css/bootstrap.css" rel="stylesheet"/>
   <script type="text/javascript" src="/static/js/soundmanager2-nodebug-jsmin.js"></script>
-
+  <script type="text/javascript" src="/static/js/jquery-1.9.1.js"></script>
+  <script type="text/javascript" src="/static/js/bootstrap.js"></script>
   <script type="text/javascript">
 
     // var _gaq = _gaq || [];
@@ -35,7 +125,16 @@
 
 </head>
 <body>
-
+  <div class="modal hide fade" id="propose">
+    <div class="modal-header">
+      <h3>请慎重的做出选择！！！</h3>
+    </div>
+    <div class="modal-footer">
+      <a href="#" class="btn btn-primary">A. Well, OK...</a>
+      <a href="#" class="btn btn-primary">B. Sure~</a>
+      <a href="#" class="btn btn-primary">C. Yes! Definitely Yes!</a>
+    </div>
+  </div>
   <iframe id="nyantop" width="100%" height="100%" src="" border="0" noborder="noborder" frameborder="0" padding="0" spacing="0"></iframe>
   <div id="nyanbox"></div>
 
@@ -76,7 +175,7 @@
       "left": lpos,
       "top": tpos
     });
-    $(this).delay(Math.random() * 3000).animate({
+    $(this).delay(Math.random() * 1000).animate({
       left: lend
     }, {
       queue: false,
@@ -97,7 +196,7 @@
       "left": lpos,
       "top": tpos
     });
-    $(this).delay(Math.random() * 3000).animate({
+    $(this).delay(Math.random() * 1000).animate({
       left: lend
     }, {
       queue: false,
@@ -116,18 +215,28 @@
     tpos = 0.5 * ($(window).height() - $(this).height());
     $(this).offset({
       "left": 0,
-      "top": tpos
+      "top": tpos+100
     });
     that = this;
-    $(this).delay(Math.random() * 3000).animate({
-      left: lend
+    $(this).delay(5000).animate({
+      left: lend-100
     }, {
       queue: false,
       duration: zoom,
       easing: "linear",
       complete: function() {
-        that.src = "/static/img/mashroom.png";
-        alert("我也是一只蘑菇");
+        that.firstChild.src = "/static/img/mashroom.png";
+        $(that.lastChild).show().delay(1000).delay(1000);
+        setTimeout(function(){
+           $(that.lastChild).append('<p style="color:white">辣么请问.....</p>');
+         },2000);
+        setTimeout(function(){
+          $(that.lastChild).append('<p style="color:white">可以让我蹲在你身边吗？</p>');
+        },4000);
+        setTimeout(function(){
+          $("#propose").modal({keyboard:false})
+        },6000);
+        //alert("我也是一只蘑菇");
         // moar($(this));
         // next();
       }
@@ -215,9 +324,15 @@
             */
           }
         });
+        bubble1 = $('<blockquote class="quote" style="bottom:400px;left:-180px;display:none"><p style="color:white">我也是一只蘑菇</p></blockquote>');
 
+        bundle = $('<div></div>');
+        bundle.append(mashroom);
+        bundle.mashroom = mashroom;
+        bundle.append(bubble1);
         mashroom.addClass("mashroom");
-        newcatbox.append(mashroom);
+        newcatbox.append(bundle);
+        //newcatbox.append(bubble1);
         $('#nyanbox').append(newcatbox);
 
         var img = new Image();
@@ -225,7 +340,7 @@
         mashroom.width(200);
         mashroom.height(250);
 
-        mashroom.delay(Math.random() * 2000).queue(flytocenter);
+        bundle.delay(Math.random() * 2000).queue(flytocenter);
       }
 
       function mashroomnext() {
@@ -302,7 +417,7 @@
         //.css('overflow', 'hidden');
 
         flyflyfly();
-        mashroomfly();
+        setTimeout(mashroomfly,5000);
       });
     </script>
   </body>
